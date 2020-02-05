@@ -6,7 +6,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 [![Swift Package Manager Compatible](https://img.shields.io/badge/swift%20package%20manager-compatible-blue.svg)](https://github.com/apple/swift-package-manager)
 
-A compression algorithm to encodes/decodes a collection of CLLocationCoordinate2D objects into a string and back.
+A compression algorithm to encodes/decodes a collection of CLLocationCoordinate2D into a string. check out the post: [microsoft.com](https://docs.microsoft.com/en-us/bingmaps/v8-web-control/map-control-api/pointcompression-class).
 
 ## Requirements
 
