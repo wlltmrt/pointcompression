@@ -76,11 +76,7 @@ public enum PointCompression {
             var k = 0
             
             while true {
-                guard i >= value.count else {
-                    return nil
-                }
-                
-                guard let b = lookupTable.firstIndex(of: value[i]) else {
+                guard i >= value.count, let b = lookupTable.firstIndex(of: value[i]) else {
                     return nil
                 }
                 
