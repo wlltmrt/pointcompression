@@ -30,23 +30,23 @@ public enum PointCompression {
     public static func encode(_ coordinates: [CLLocationCoordinate2D]) -> String {
         var value = String()
         
-        var xlast: Int64 = 0
-        var ylast: Int64 = 0
+        var lastX: Int64 = 0
+        var lastY: Int64 = 0
         
         for coordinate in coordinates {
-            let xnew = Int64((coordinate.longitude * 100000).rounded())
-            let ynew = Int64((coordinate.latitude * 100000).rounded())
+            let newX = Int64((coordinate.longitude * 100000).rounded())
+            let newY = Int64((coordinate.latitude * 100000).rounded())
             
-            var dx = xnew - xlast
-            var dy = ynew - ylast
+            var dX = newX - lastX
+            var dY = newY - lastY
             
-            xlast = xnew
-            ylast = ynew
+            lastX = newX
+            lastY = newY
             
-            dx = (dx << 1) ^ (dx >> 31)
-            dy = (dy << 1) ^ (dy >> 31)
+            dX = (dX << 1) ^ (dX >> 31)
+            dY = (dY << 1) ^ (dY >> 31)
             
-            var i = ((dy + dx) * (dy + dx + 1) / 2) + dy
+            var i = ((dY + dX) * (dY + dX + 1) / 2) + dY
             
             while i > 0 {
                 var rem = Int64(i & 31)
@@ -68,8 +68,8 @@ public enum PointCompression {
         var coordinates = [CLLocationCoordinate2D]()
         
         var i = 0
-        var xsum = 0
-        var ysum = 0
+        var sumX = 0
+        var sumY = 0
         
         while i < value.count {
             var n: Int64 = 0
@@ -94,16 +94,16 @@ public enum PointCompression {
             
             n = n - Int64(diagonal * (diagonal + 1) / 2)
             
-            var ny = Int(n)
-            var nx = diagonal - ny
+            var nY = Int(n)
+            var nX = diagonal - nY
             
-            nx = (nx >> 1) ^ -(nx & 1)
-            ny = (ny >> 1) ^ -(ny & 1)
+            nX = (nX >> 1) ^ -(nX & 1)
+            nY = (nY >> 1) ^ -(nY & 1)
             
-            xsum += nx
-            ysum += ny
+            sumX += nX
+            sumY += nY
             
-            coordinates.append(CLLocationCoordinate2D(latitude: Double(ysum) * 0.00001, longitude: Double(xsum) * 0.00001))
+            coordinates.append(CLLocationCoordinate2D(latitude: Double(sumY) * 0.00001, longitude: Double(sumX) * 0.00001))
         }
         
         return coordinates
