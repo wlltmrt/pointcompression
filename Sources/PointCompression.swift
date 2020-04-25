@@ -24,12 +24,12 @@
 
 import CoreLocation
 
+@frozen
 public enum PointCompression {
     private static let lookupTable = Array("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-")
     
     public static func encode(_ coordinates: [CLLocationCoordinate2D]) -> String {
         var value = String()
-        
         var lastX: Int64 = 0
         var lastY: Int64 = 0
         
@@ -87,7 +87,7 @@ public enum PointCompression {
                     break
                 }
                 
-                i = i + 1
+                i += 1
             }
             
             let diagonal = Int(((8 * n + 5).squareRoot() - 1) / 2)
