@@ -24,7 +24,6 @@
 
 import CoreLocation
 
-@frozen
 public enum PointCompression {
     private static let lookupTable = Array("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-")
     
